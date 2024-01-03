@@ -1,0 +1,30 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Empresa {
+  id          Int       @id @default(autoincrement())
+  razaoSocial String
+  cnpj        String
+  cep         String
+  cidade      String
+  estado      String
+  bairro      String
+  complemento String
+  licencas    Licenca[]
+}
+
+model Licenca {
+  id             Int      @id @default(autoincrement())
+  numero         String
+  orgaoAmbiental String
+  emissao        String
+  validade       String
+  empresa        Empresa  @relation(fields: [empresaId], references: [id])
+  empresaId      Int
+}
